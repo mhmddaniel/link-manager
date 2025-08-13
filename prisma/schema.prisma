@@ -1,0 +1,25 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Link {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique // e.g. AbCd12
+  path        String // e.g. /detail_premium_class
+  params      Json // { "uuid": "..." }
+  title       String? // OG
+  description String? // OG
+  imageUrl    String? // OG
+  clicks      Int       @default(0)
+  expiresAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
